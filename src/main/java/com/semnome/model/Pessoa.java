@@ -3,6 +3,7 @@ package com.semnome.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 import lombok.Getter;
 
@@ -10,10 +11,11 @@ import lombok.Getter;
 public abstract class Pessoa {
 	
 	@Getter
+	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
-	@Getter
+	@Getter	
 	private String nome;
 	
 	@Getter
