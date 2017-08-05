@@ -16,10 +16,30 @@ import javax.persistence.OneToMany;
 
 import lombok.Getter;
 
+/**
+ * Representa a entidade pessoa da aplicação<br>
+ * Esta classe deve ser especializada para ser utilizada<br>
+ * Tipos disponiveis:<br>
+ * Pessoa fisica: {@link PessoaFisica}<br>
+ * Pessoa juridica: {@link PessoaJuridica}<br>
+ * 
+ * @author Daniel Ferraz
+ * @since 5 de ago de 2017
+ *
+ */
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "TIPO")
 public abstract class Pessoa {
+	
+	/**
+	 * Código de pessoa fisica
+	 */
+	public static final String PESSOA_FISICA = "PF";
+	/**
+	 * Código de pessoa juridica
+	 */
+	public static final String PESSOA_JURIDICA = "PJ"; 
 	
 	@Getter
 	@Id

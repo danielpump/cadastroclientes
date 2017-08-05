@@ -13,6 +13,8 @@ import lombok.Data;
 import lombok.Getter;
 
 /**
+ * Representa a entidade carro da aplicação
+ * 
  * @author Daniel Ferraz
  * @since 4 de ago de 2017
  *
