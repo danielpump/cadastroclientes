@@ -58,6 +58,10 @@ public abstract class Pessoa {
 	@Column(length=14)
 	private String documento;
 	
+	@Getter
+	@Column(length=2, insertable=false, updatable=false)
+	private String tipo;
+	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@Fetch(FetchMode.JOIN)
 	private List<Carro> carros;
