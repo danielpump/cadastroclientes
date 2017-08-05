@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import lombok.Data;
 import lombok.Getter;
 
 /**
@@ -17,9 +18,9 @@ import lombok.Getter;
  *
  */
 @Entity
+@Data
 public class Carro {
-	
-	@Getter
+		
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
