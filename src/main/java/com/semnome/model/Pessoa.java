@@ -1,5 +1,6 @@
 package com.semnome.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,6 +14,9 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import lombok.Getter;
 
@@ -55,6 +59,32 @@ public abstract class Pessoa {
 	private String documento;
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@Fetch(FetchMode.JOIN)
 	private List<Carro> carros;
+	
+	public static Pessoa criaPessoaFisica() {
+		return new PessoaFisica();
+	}
+	
+	public static Pessoa criaPessoaJuridica() {
+		return new PessoaJuridica();
+	}
+	
+	public Pessoa comNome(String nome) {
+		this.nome = nome;
+		return this;
+	}
+	
+	public Pessoa comDocumento(String documento) {
+		this.documento = documento;
+		return this;
+	}
+	
+	public Pessoa adicionaCarro(Carro carro) {
+		if(this.carros == null) this.carros = new ArrayList<>();
+		this.carros.add(carro);
+		return this;
+	}
+	
 
 }

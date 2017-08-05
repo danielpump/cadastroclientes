@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.semnome.model.Carro;
-import com.semnome.servicos.CarroService;
+import com.semnome.model.Pessoa;
+import com.semnome.model.PessoaFisica;
+import com.semnome.servicos.PessoaService;
 
 /**
  * @author Daniel Ferraz
@@ -18,17 +20,17 @@ import com.semnome.servicos.CarroService;
  *
  */
 @RestController
-public class CarroController {
+public class PessoaController {
 	
 	@Autowired
-	private CarroService carroService;
+	private PessoaService pessoaService;
 	
 	@RequestMapping(path="/")
 	public String home() {
 		return "Oi";
 	}
 
-	@RequestMapping(path="/grava")
+	@RequestMapping(path="/pessoa/grava")
 	public String cadastra() {
 		
 		Carro carro = new Carro();
@@ -36,14 +38,16 @@ public class CarroController {
 		carro.setModelo("Teste");
 		carro.setPlaca("AAA8899");
 		
-		carroService.grava(carro);
+		Pessoa pessoa = Pessoa.criaPessoaFisica().comNome("Daniel").comDocumento("12378945652").adicionaCarro(carro);
+		
+		pessoaService.grava(pessoa);
 		
 		return "Sucesso";
 	}
 	
-	@RequestMapping(path="/lista")
-	public List<Carro> lista(){
-		return carroService.listaTudo();
+	@RequestMapping(path="/pessoa/lista")
+	public List<Pessoa> lista(){
+		return pessoaService.listaTudo();
 	}
 	
 }
