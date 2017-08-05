@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.semnome.model.Pessoa;
@@ -43,9 +44,16 @@ public class PessoaController {
 		return "Sucesso";
 	}
 	
-	@RequestMapping(path="/pessoa/lista")
-	public List<Pessoa> lista(){
-		return pessoaService.listaTudo();
+	@RequestMapping(path="/pessoa/busca", params="documento")
+	public Pessoa lista(@RequestParam String documento){
+		return pessoaService.buscaPorDocumento(documento);
 	}
+	
+	@RequestMapping(path="/pessoa/exclui", params="documento")
+	public Pessoa exclui(@RequestParam String documento){
+		return pessoaService.excluiPorDocumento(documento);
+	}
+	
+	
 	
 }

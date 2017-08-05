@@ -83,14 +83,19 @@ public class PessoaService {
 
 		pessoaRepository.save(pessoa);
 	}
-
-	public List<Pessoa> listaTudo() {
-
-		ArrayList<Pessoa> pessoas = new ArrayList<>();
-		for (Pessoa pessoa : pessoaRepository.findAll()) {
-			pessoas.add(pessoa);
+	
+	public Pessoa buscaPorDocumento(String documento) {
+		Pessoa pessoa = pessoaRepository.findByDocumento(documento);
+		if(pessoa == null) {
+			throw new NegocioException("Registro não encontrado"); 
 		}
-		return pessoas;
+		return pessoa;
+	}
+	
+	public Pessoa excluiPorDocumento(String documento) {
+		Pessoa pessoa = buscaPorDocumento(documento);		
+		pessoaRepository.delete(pessoa);
+		return pessoa;
 	}
 
 }
