@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.semnome.excecoes.NegocioException;
 import com.semnome.model.Carro;
 import com.semnome.model.Pessoa;
+import com.semnome.repostorios.CarroRepository;
 import com.semnome.repostorios.PessoaRepository;
 
 /**
@@ -25,6 +26,9 @@ public class PessoaService {
 
 	@Autowired
 	private PessoaRepository pessoaRepository;
+	
+	@Autowired
+	private CarroRepository carroRepository;
 
 	public void grava(Pessoa pessoa) {
 
@@ -51,6 +55,10 @@ public class PessoaService {
 		} else {
 			throw new NegocioException("Tipo de pessoa não identificado");
 		}
+				
+		if(pessoaRepository.findByDocumento(pessoa.getDocumento()) != null) {
+			throw new NegocioException("Registro já existe");
+		}
 		
 
 		if (pessoa.getCarros().isEmpty()) {
@@ -63,6 +71,13 @@ public class PessoaService {
 			}
 			if (StringUtils.isEmpty(carro.getPlaca())) {
 				throw new NegocioException("Carro nao placa");
+			}
+			carro.setPlaca(carro.getPlaca().toUpperCase());
+			if(!carro.getPlaca().matches("^[A-Z]{3}\\d{4}$")) {
+				throw new NegocioException("Formato de placa inválida");
+			}
+			if(carroRepository.findByPlaca(carro.getPlaca()) != null) {
+				throw new NegocioException("Veículo já cadastrado");
 			}
 		}
 

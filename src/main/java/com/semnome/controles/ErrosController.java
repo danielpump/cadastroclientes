@@ -1,6 +1,5 @@
 package com.semnome.controles;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,8 +16,10 @@ public class ErrosController {
 
 	@ExceptionHandler(NegocioException.class)
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
-	public Map<String,Object>  conflict(HttpServletRequest req, Exception e) {
-	     return null;
+	public Map<String, Object> conflict(HttpServletRequest req, Exception e) {
+//		log.error(e.getMessage(), e);
+		System.out.println(e.getMessage());
+		return null;
 	}
 
 }

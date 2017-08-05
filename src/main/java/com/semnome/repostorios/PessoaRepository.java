@@ -15,5 +15,7 @@ import com.semnome.model.Pessoa;
  *
  */
 public interface PessoaRepository extends CrudRepository<Pessoa, Long> {
+	
+	Pessoa findByDocumento(String documento);
 
 }

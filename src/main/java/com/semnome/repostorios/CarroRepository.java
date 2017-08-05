@@ -16,5 +16,7 @@ import com.semnome.model.Carro;
  *
  */
 public interface CarroRepository extends CrudRepository<Carro, Long> {
+	
+	Carro findByPlaca(String placa);
 
 }
