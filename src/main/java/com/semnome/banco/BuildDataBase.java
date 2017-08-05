@@ -19,8 +19,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class BuildDataBase {
 
-	@PostConstruct
+//	@PostConstruct
 	public void init() {
+		System.out.println("simmmmmmmmmmmmmmmmmm");
 		Connection c = null;
 		Statement stmt = null;
 		String databasePath = System.getProperty("java.io.tmpdir") + "semnome.db";
