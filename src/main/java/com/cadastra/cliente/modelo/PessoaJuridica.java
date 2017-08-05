@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.cadastra.cliente.model;
+package com.cadastra.cliente.modelo;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -12,7 +12,7 @@ import javax.persistence.Entity;
  *
  */
 @Entity
-@DiscriminatorValue(value = "PF")
-public class PessoaFisica extends Pessoa {
+@DiscriminatorValue(value = "PJ")
+public class PessoaJuridica extends Pessoa {
 
 }

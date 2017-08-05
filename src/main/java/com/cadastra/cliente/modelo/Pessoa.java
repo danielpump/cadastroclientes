@@ -1,4 +1,4 @@
-package com.cadastra.cliente.model;
+package com.cadastra.cliente.modelo;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.cadastra.cliente.excecoes.NegocioException;
 
 @ControllerAdvice
-public class ErrosController {
+public class ErrosControle {
 
 	@ExceptionHandler(NegocioException.class)
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)

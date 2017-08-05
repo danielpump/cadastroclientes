@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cadastra.cliente.model.Pessoa;
-import com.cadastra.cliente.model.PessoaFisica;
-import com.cadastra.cliente.model.PessoaJuridica;
-import com.cadastra.cliente.servicos.PessoaService;
+import com.cadastra.cliente.modelo.Pessoa;
+import com.cadastra.cliente.modelo.PessoaFisica;
+import com.cadastra.cliente.modelo.PessoaJuridica;
+import com.cadastra.cliente.servicos.PessoaServico;
 
 /**
  * @author Daniel Ferraz
@@ -23,10 +23,10 @@ import com.cadastra.cliente.servicos.PessoaService;
  *
  */
 @RestController
-public class PessoaController {
+public class PessoaControle {
 	
 	@Autowired
-	private PessoaService pessoaService;
+	private PessoaServico pessoaService;
 
 	@RequestMapping(path="/pessoa/fisica/salvar", method=RequestMethod.POST)
 	public String cadastra(@RequestBody PessoaFisica pessoa) {

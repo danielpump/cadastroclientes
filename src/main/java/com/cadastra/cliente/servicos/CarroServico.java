@@ -10,8 +10,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cadastra.cliente.model.Carro;
-import com.cadastra.cliente.repostorios.CarroRepository;
+import com.cadastra.cliente.modelo.Carro;
+import com.cadastra.cliente.repostorios.CarroRepositorio;
 
 /**
  * @author Daniel Ferraz
@@ -19,10 +19,10 @@ import com.cadastra.cliente.repostorios.CarroRepository;
  *
  */
 @Service
-public class CarroService {
+public class CarroServico {
 
 	@Autowired
-	private CarroRepository carroRepository;
+	private CarroRepositorio carroRepository;
 
 	public void grava(Carro carro) {
 		carroRepository.save(carro);

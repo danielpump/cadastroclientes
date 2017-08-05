@@ -11,10 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cadastra.cliente.excecoes.NegocioException;
-import com.cadastra.cliente.model.Carro;
-import com.cadastra.cliente.model.Pessoa;
-import com.cadastra.cliente.repostorios.CarroRepository;
-import com.cadastra.cliente.repostorios.PessoaRepository;
+import com.cadastra.cliente.modelo.Carro;
+import com.cadastra.cliente.modelo.Pessoa;
+import com.cadastra.cliente.repostorios.CarroRepositorio;
+import com.cadastra.cliente.repostorios.PessoaRepositorio;
 
 /**
  * @author Daniel Ferraz
@@ -22,13 +22,13 @@ import com.cadastra.cliente.repostorios.PessoaRepository;
  *
  */
 @Service
-public class PessoaService {
+public class PessoaServico {
 
 	@Autowired
-	private PessoaRepository pessoaRepository;
+	private PessoaRepositorio pessoaRepository;
 	
 	@Autowired
-	private CarroRepository carroRepository;
+	private CarroRepositorio carroRepository;
 
 	public void grava(Pessoa pessoa) {
 

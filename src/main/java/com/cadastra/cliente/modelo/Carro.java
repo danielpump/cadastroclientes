@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.cadastra.cliente.model;
+package com.cadastra.cliente.modelo;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
