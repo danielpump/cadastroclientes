@@ -6,11 +6,14 @@ package com.semnome.controles;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.semnome.model.Pessoa;
+import com.semnome.model.PessoaFisica;
 import com.semnome.servicos.PessoaService;
 
 /**
@@ -29,15 +32,10 @@ public class PessoaController {
 		return "Oi";
 	}
 
-	@RequestMapping(path="/pessoa/grava", method=RequestMethod.POST)
-	public String cadastra(Pessoa pessoa) {
+	@RequestMapping(path="/pessoa/fisica/salvar", method=RequestMethod.POST)
+	public String cadastra(@RequestBody PessoaFisica pessoa) {
 		
-//		Carro carro = new Carro();
-//		
-//		carro.setModelo("Teste");
-//		carro.setPlaca("AAA8899");
-		
-		//Pessoa pessoa = Pessoa.criaPessoaFisica().comNome("Daniel").comDocumento("12378945652").adicionaCarro(carro);
+		//Verificar se tipo está correto
 		
 		pessoaService.grava(pessoa);
 		
