@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.Fetch;
@@ -33,7 +34,7 @@ import lombok.Getter;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "TIPO")
+@DiscriminatorColumn(name = "TIPOPESSOA")
 public abstract class Pessoa {
 	
 	/**
@@ -55,15 +56,17 @@ public abstract class Pessoa {
 	private String nome;
 	
 	@Getter
-	@Column(length=14)
+	@Column(length=14, unique=true)
 	private String documento;
 	
 	@Getter
-	@Column(length=2, insertable=false, updatable=false)
-	private String tipo;
+	@Column(length=2, insertable=false, updatable=false, name="TIPOPESSOA")
+	private String tipoPessoa;
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@Fetch(FetchMode.JOIN)
+	@JoinColumn(name="idpessoa")
+	@Getter
 	private List<Carro> carros;
 	
 	public static Pessoa criaPessoaFisica() {
