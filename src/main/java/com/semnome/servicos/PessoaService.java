@@ -39,9 +39,18 @@ public class PessoaService {
 			throw new RuntimeException("Documento deve possuir apenas numeros");
 		}
 
-		if (pessoa.getDocumento().length() != 11) {
-			throw new RuntimeException("Documento deve conter os 11 caracteres do CPF");
+		if(Pessoa.PESSOA_FISICA.equals(pessoa.getTipoPessoa())) {
+			if (pessoa.getDocumento().length() != 11) {
+				throw new RuntimeException("Documento deve conter os 11 caracteres do CPF");
+			}
+		} else if(Pessoa.PESSOA_JURIDICA.equals(pessoa.getTipoPessoa())) {
+			if (pessoa.getDocumento().length() != 14) {
+				throw new RuntimeException("Documento deve conter os 14 caracteres do CNPJ");
+			}
+		} else {
+			throw new RuntimeException("Tipo de pessoa não identificado");
 		}
+		
 
 		if (pessoa.getCarros().isEmpty()) {
 			throw new RuntimeException("Pessoa deve possuir ao menos um veículo para cadastro");
