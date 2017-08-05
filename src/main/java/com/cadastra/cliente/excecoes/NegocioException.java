@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.semnome.excecoes;
+package com.cadastra.cliente.excecoes;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

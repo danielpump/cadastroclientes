@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.semnome;
+package com.cadastra.cliente;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

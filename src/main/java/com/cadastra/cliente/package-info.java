@@ -4,4 +4,4 @@
  * @author Daniel Ferraz
  *
  */
-package com.semnome;
+package com.cadastra.cliente;

@@ -1,4 +1,4 @@
-package com.semnome.banco;
+package com.cadastra.cliente.banco;
 
 import java.sql.Types;
 

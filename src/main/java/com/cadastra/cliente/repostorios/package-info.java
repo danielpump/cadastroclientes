@@ -5,4 +5,4 @@
  * @since 4 de ago de 2017
  *
  */
-package com.semnome.repostorios;
+package com.cadastra.cliente.repostorios;

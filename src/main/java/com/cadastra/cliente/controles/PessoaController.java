@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.semnome.controles;
+package com.cadastra.cliente.controles;
 
 import java.util.List;
 
@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.semnome.model.Pessoa;
-import com.semnome.model.PessoaFisica;
-import com.semnome.model.PessoaJuridica;
-import com.semnome.servicos.PessoaService;
+import com.cadastra.cliente.model.Pessoa;
+import com.cadastra.cliente.model.PessoaFisica;
+import com.cadastra.cliente.model.PessoaJuridica;
+import com.cadastra.cliente.servicos.PessoaService;
 
 /**
  * @author Daniel Ferraz

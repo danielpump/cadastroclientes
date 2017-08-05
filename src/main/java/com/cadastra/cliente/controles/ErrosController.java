@@ -1,4 +1,4 @@
-package com.semnome.controles;
+package com.cadastra.cliente.controles;
 
 import java.util.Map;
 
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.semnome.excecoes.NegocioException;
+import com.cadastra.cliente.excecoes.NegocioException;
 
 @ControllerAdvice
 public class ErrosController {

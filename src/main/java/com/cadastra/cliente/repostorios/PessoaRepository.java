@@ -1,11 +1,11 @@
 /**
  * 
  */
-package com.semnome.repostorios;
+package com.cadastra.cliente.repostorios;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.semnome.model.Pessoa;
+import com.cadastra.cliente.model.Pessoa;
 
 /**
  * Repositório para o acesso aos dados de ações para uma {@link Pessoa}

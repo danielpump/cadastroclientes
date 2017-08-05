@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.semnome.servicos;
+package com.cadastra.cliente.servicos;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,8 +10,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.semnome.model.Carro;
-import com.semnome.repostorios.CarroRepository;
+import com.cadastra.cliente.model.Carro;
+import com.cadastra.cliente.repostorios.CarroRepository;
 
 /**
  * @author Daniel Ferraz

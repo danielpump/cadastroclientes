@@ -1,4 +1,4 @@
-package com.semnome.model;
+package com.cadastra.cliente.model;
 
 import java.util.ArrayList;
 import java.util.List;

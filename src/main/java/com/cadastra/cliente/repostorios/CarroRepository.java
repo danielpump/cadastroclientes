@@ -1,12 +1,12 @@
 /**
  * 
  */
-package com.semnome.repostorios;
+package com.cadastra.cliente.repostorios;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.semnome.model.Carro;
+import com.cadastra.cliente.model.Carro;
 
 /**
  * Repositório para o acesso aos dados de ações para um {@link Carro}
