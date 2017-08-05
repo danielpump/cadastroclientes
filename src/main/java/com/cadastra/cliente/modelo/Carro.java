@@ -23,7 +23,7 @@ import lombok.Getter;
  */
 @Entity
 @Data
-public class Carro {
+public class Carro implements Entidade {
 		
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

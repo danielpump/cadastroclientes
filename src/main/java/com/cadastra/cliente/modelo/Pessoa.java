@@ -37,7 +37,7 @@ import lombok.Getter;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "TIPOPESSOA")
-public abstract class Pessoa {
+public abstract class Pessoa implements Entidade {
 	
 	/**
 	 * Código de pessoa fisica
