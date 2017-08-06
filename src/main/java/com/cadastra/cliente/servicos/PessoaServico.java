@@ -25,7 +25,7 @@ public class PessoaServico {
 	@Autowired
 	private PessoaValidador pessoaValidador;
 
-	public void grava(Pessoa pessoa) {
+	public void gravar(Pessoa pessoa) {
 
 		pessoaValidador.validar(pessoa);
 
@@ -33,7 +33,7 @@ public class PessoaServico {
 
 	}
 
-	public Pessoa buscaPorDocumento(String documento) {
+	public Pessoa buscarPorDocumento(String documento) {
 		Pessoa pessoa = pessoaRepository.findByDocumento(documento);
 		if (pessoa == null) {
 			throw new NegocioException("Registro não encontrado");
@@ -41,9 +41,16 @@ public class PessoaServico {
 		return pessoa;
 	}
 
-	public Pessoa excluiPorDocumento(String documento) {
-		Pessoa pessoa = buscaPorDocumento(documento);
+	public Pessoa excluirPorDocumento(String documento) {
+		Pessoa pessoa = buscarPorDocumento(documento);
 		pessoaRepository.delete(pessoa);
+		return pessoa;
+	}
+
+	public Pessoa atualizarPorDocumento(String documento, Pessoa novosDados) {
+		Pessoa pessoa = buscarPorDocumento(documento);
+		pessoa.atualizar(novosDados);
+		gravar(pessoa);
 		return pessoa;
 	}
 

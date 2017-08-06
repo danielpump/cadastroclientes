@@ -10,10 +10,10 @@ import com.cadastra.cliente.servicos.validadores.Validador;
 
 @Component
 public class PessoaJaExisteValidador implements Validador<Pessoa> {
-	
+
 	@Autowired
 	private PessoaRepositorio pessoaRepository;
-	
+
 	@Override
 	public Integer prioridade() {
 		return 1;
@@ -21,8 +21,10 @@ public class PessoaJaExisteValidador implements Validador<Pessoa> {
 
 	@Override
 	public void estaValido(Pessoa pessoa) {
-		if (pessoaRepository.findByDocumento(pessoa.getDocumento()) != null) {
-			throw new NegocioException("Registro já existe");
+		if (pessoa.getId() == null) {
+			if (pessoaRepository.findByDocumento(pessoa.getDocumento()) != null) {
+				throw new NegocioException("Registro já existe");
+			}
 		}
 	}
 

@@ -22,7 +22,7 @@ public class VeiculoValidador implements Validador<Pessoa> {
 
 	@Override
 	public void estaValido(Pessoa pessoa) {
-		if (pessoa.getCarros().isEmpty()) {
+		if (pessoa.getCarros() == null || pessoa.getCarros().isEmpty()) {
 			throw new NegocioException("Pessoa deve possuir ao menos um veículo para cadastro");
 		}
 

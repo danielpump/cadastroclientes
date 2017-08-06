@@ -16,6 +16,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -38,7 +39,7 @@ import lombok.Getter;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "TIPOPESSOA")
 public abstract class Pessoa implements Entidade {
-	
+
 	/**
 	 * Código de pessoa fisica
 	 */
@@ -46,55 +47,87 @@ public abstract class Pessoa implements Entidade {
 	/**
 	 * Código de pessoa juridica
 	 */
-	public static final String PESSOA_JURIDICA = "PJ"; 
-	
+	public static final String PESSOA_JURIDICA = "PJ";
+
 	@Getter
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@JsonIgnore
 	private Long id;
-	
-	@Getter	
-	@Column(length=100)
+
+	@Getter
+	@Column(length = 100)
 	private String nome;
-	
+
 	@Getter
-	@Column(length=14, unique=true)
+	@Column(length = 14, unique = true)
 	private String documento;
-	
+
 	@Getter
-	@Column(length=2, insertable=false, updatable=false, name="TIPOPESSOA")
+	@Column(length = 2, insertable = false, updatable = false, name = "TIPOPESSOA")
 	private String tipoPessoa;
-	
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	@Fetch(FetchMode.JOIN)
-	@JoinColumn(name="idpessoa")
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval=true)
+	@JoinColumn(name = "idpessoa", nullable = false)
 	@Getter
 	private List<Carro> carros;
-	
+
 	public static Pessoa criaPessoaFisica() {
 		return new PessoaFisica();
 	}
-	
+
 	public static Pessoa criaPessoaJuridica() {
 		return new PessoaJuridica();
 	}
-	
+
 	public Pessoa comNome(String nome) {
 		this.nome = nome;
 		return this;
 	}
-	
+
 	public Pessoa comDocumento(String documento) {
 		this.documento = documento;
 		return this;
 	}
-	
+
 	public Pessoa adicionaCarro(Carro carro) {
-		if(this.carros == null) this.carros = new ArrayList<>();
+		if (this.carros == null)
+			this.carros = new ArrayList<>();
 		this.carros.add(carro);
 		return this;
 	}
-	
+
+	@Override
+	public void atualizar(Entidade entidade) {
+		Pessoa pessoa = (Pessoa) entidade;
+
+		if (!StringUtils.isEmpty(pessoa.getNome())) {
+			this.nome = pessoa.getNome();
+		}
+
+		if (pessoa.getCarros() != null && !pessoa.getCarros().isEmpty()) {
+			List<Carro> carrosCadastrados =  new ArrayList<>(this.carros);
+			this.carros.removeAll(this.carros);
+			for (Carro carro : pessoa.getCarros()) {
+				Carro carroCadastrado = carroJaCadastrado(carrosCadastrados, carro);
+				if (carroCadastrado != null) {
+					this.carros.add(carroCadastrado);
+				} else {
+					carro.setPessoa(this);
+					this.carros.add(carro);
+				}
+			}
+		}
+
+	}
+
+	private Carro carroJaCadastrado(List<Carro> carrosCadastrados, Carro carro) {
+		for (Carro carroCadastrado : carrosCadastrados) {
+			if (carroCadastrado.getPlaca().equalsIgnoreCase(carro.getPlaca())) {
+				return carroCadastrado;
+			}
+		}
+		return null;
+	}
 
 }

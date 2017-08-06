@@ -12,6 +12,6 @@ package com.cadastra.cliente.modelo;
  */
 public interface Entidade {
 
-	
+	void atualizar(Entidade entidade);
 	
 }

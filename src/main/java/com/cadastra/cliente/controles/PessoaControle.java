@@ -29,31 +29,46 @@ public class PessoaControle {
 	private PessoaServico pessoaService;
 
 	@RequestMapping(path="/pessoa/fisica/salvar", method=RequestMethod.POST)
-	public String cadastra(@RequestBody PessoaFisica pessoa) {
+	public String cadastrar(@RequestBody PessoaFisica pessoa) {
 				
-		pessoaService.grava(pessoa);
+		pessoaService.gravar(pessoa);
 		
 		return "Sucesso";
 	}
 	
 	@RequestMapping(path="/pessoa/juridica/salvar", method=RequestMethod.POST)
-	public String cadastra(@RequestBody PessoaJuridica pessoa) {
+	public String cadastrar(@RequestBody PessoaJuridica pessoa) {
 				
-		pessoaService.grava(pessoa);
+		pessoaService.gravar(pessoa);
 		
 		return "Sucesso";
 	}
 	
-	@RequestMapping(path="/pessoa/busca", params="documento")
-	public Pessoa lista(@RequestParam String documento){
-		return pessoaService.buscaPorDocumento(documento);
+	@RequestMapping(path="/pessoa/fisica/atualizar", method=RequestMethod.POST)
+	public String atualizar(@RequestParam String documento, @RequestBody PessoaFisica pessoa) {
+				
+		pessoaService.atualizarPorDocumento(documento, pessoa);
+		
+		return "Sucesso";
 	}
 	
-	@RequestMapping(path="/pessoa/exclui", params="documento")
-	public Pessoa exclui(@RequestParam String documento){
-		return pessoaService.excluiPorDocumento(documento);
+	@RequestMapping(path="/pessoa/juridica/atualizar", method=RequestMethod.POST)
+	public String atualizar(@RequestParam String documento, @RequestBody PessoaJuridica pessoa) {
+				
+		pessoaService.atualizarPorDocumento(documento, pessoa);
+		
+		return "Sucesso";
 	}
 	
+	@RequestMapping(path="/pessoa/buscar", params="documento")
+	public Pessoa listar(@RequestParam String documento){
+		return pessoaService.buscarPorDocumento(documento);
+	}
 	
+	@RequestMapping(path="/pessoa/excluir", params="documento")
+	public Pessoa excluir(@RequestParam String documento){
+		return pessoaService.excluirPorDocumento(documento);
+	}
+
 	
 }
