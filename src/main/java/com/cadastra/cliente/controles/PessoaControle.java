@@ -58,12 +58,12 @@ public class PessoaControle {
 		return "Sucesso";
 	}
 	
-	@RequestMapping(path="/pessoa/buscar", params="documento")
+	@RequestMapping(path="/pessoa/buscar", params="documento", method=RequestMethod.GET)
 	public Pessoa listar(@RequestParam String documento){
 		return pessoaService.buscarPorDocumento(documento);
 	}
 	
-	@RequestMapping(path="/pessoa/excluir", params="documento")
+	@RequestMapping(path="/pessoa/excluir", params="documento" , method=RequestMethod.DELETE)
 	public Pessoa excluir(@RequestParam String documento){
 		return pessoaService.excluirPorDocumento(documento);
 	}
