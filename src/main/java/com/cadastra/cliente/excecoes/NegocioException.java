@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * @since 5 de ago de 2017
  *
  */
+@ResponseStatus(value=HttpStatus.BAD_REQUEST)
 public class NegocioException  extends RuntimeException{
 
 	public NegocioException(String message) {
