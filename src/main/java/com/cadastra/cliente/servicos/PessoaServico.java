@@ -36,7 +36,7 @@ public class PessoaServico {
 	public Pessoa buscarPorDocumento(String documento) {
 		Pessoa pessoa = pessoaRepository.findByDocumento(documento);
 		if (pessoa == null) {
-			throw new NegocioException("Registro não encontrado");
+			throw new NegocioException("Registro de pessoa sem cadastro no banco de dados");
 		}
 		return pessoa;
 	}

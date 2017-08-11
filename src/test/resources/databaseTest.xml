@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<pessoa tipopessoa="PF" id="1" documento="12345678901" nome="Pessoa fisica 1" />
+	<pessoa tipopessoa="PF" id="2" documento="12345678902" nome="Pessoa fisica 2" />
+	<pessoa tipopessoa="PJ" id="3" documento="12345678901234" nome="Pessoa juridica 1" />
+	<pessoa tipopessoa="PJ" id="4" documento="12345678901235" nome="Pessoa juridica 2" />
+	
+	<carro id="1" modelo="Modelo 1" placa="AAA1111" idpessoa="1" />
+	<carro id="2" modelo="Modelo 2" placa="AAA1112" idpessoa="2" />
+	<carro id="3" modelo="Modelo 3" placa="AAA1113" idpessoa="2" />
+	<carro id="4" modelo="Modelo 4" placa="AAA1114" idpessoa="3" />
+	<carro id="5" modelo="Modelo 5" placa="AAA1115" idpessoa="4" />
+	<carro id="6" modelo="Modelo 6" placa="AAA1116" idpessoa="4" />
+	
+</dataset>
