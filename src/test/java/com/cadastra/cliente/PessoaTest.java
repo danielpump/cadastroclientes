@@ -846,8 +846,8 @@ public class PessoaTest extends ApplicationTest {
 	
 	@Test
 	public void testeDeConsultaDeQuantidadeDeRegistrosPorStatus() throws Exception {
-		String message = this.mockMvc.perform(get("/carros/consultar?status=NE")).andExpect(status().isBadRequest())
-				.andReturn().getResolvedException().getMessage();
+		String message = this.mockMvc.perform(get("/carros/consultar?status=NE"))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		HashMap mapaRetorno = new ObjectMapper().readValue(message, HashMap.class);
 		assertThat(mapaRetorno.get("status")).isEqualTo("NE");
 		assertThat(mapaRetorno.get("pf")).isEqualTo(Long.valueOf(3));
@@ -856,8 +856,8 @@ public class PessoaTest extends ApplicationTest {
 	
 	@Test
 	public void testeDeConsultaDeQuantidadeDeRegistrosPorStatusInvalido() throws Exception {
-		String message = this.mockMvc.perform(get("/carros/consultar?status=NA"))
-				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+		String message = this.mockMvc.perform(get("/carros/consultar?status=NA")).andExpect(status().isBadRequest())
+				.andReturn().getResolvedException().getMessage();
 		assertThat(message).isEqualTo("Status para consulta incorreto");
 		
 	}
