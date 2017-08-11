@@ -381,5 +381,67 @@ public class PessoaTest extends ApplicationTest {
 
 		assertThat(message).isEqualTo("Registro de carro existente na base");
 	}
+	
+	
+	
+	@Test
+	public void testeDeAtualizacaoDePessoaFisicaApenasNome() throws Exception {
+		String jsonResposta = this.mockMvc
+				.perform(post("/pessoa/fisica/atualizar?documento=12345678902").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"nome\":\"Pessoa fisica 11\"}"))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+
+		assertThat(jsonResposta).isEqualTo("{\"nome\":\"Pessoa fisica 11\",\"documento\":\"12345678902\",\"tipoPessoa\":\"PF\",\"carros\":[{\"modelo\":\"Modelo 2\",\"placa\":\"AAA1112\"},{\"modelo\":\"Modelo 3\",\"placa\":\"AAA1113\"}]}");
+	}
+	
+	@Test
+	public void testeDeAtualizacaoDePessoaJuridicaApenasNome() throws Exception {
+		String jsonResposta = this.mockMvc
+				.perform(post("/pessoa/juridica/atualizar?documento=12345678901235").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"nome\":\"Pessoa juridica 11\"}"))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+
+		assertThat(jsonResposta).isEqualTo("{\"nome\":\"Pessoa juridica 11\",\"documento\":\"12345678901235\",\"tipoPessoa\":\"PJ\",\"carros\":[{\"modelo\":\"Modelo 5\",\"placa\":\"AAA1115\"},{\"modelo\":\"Modelo 6\",\"placa\":\"AAA1116\"}]}");
+	}
+	
+	@Test
+	public void testeDeAtualizacaoDePessoaFisicaComNomeECarroAMenos() throws Exception {
+		String jsonResposta = this.mockMvc
+				.perform(post("/pessoa/fisica/atualizar?documento=12345678902").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"nome\":\"Pessoa fisica 11\",\"carros\":[{\"modelo\":\"Modelo 2\",\"placa\":\"AAA1112\"}]}"))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+
+		assertThat(jsonResposta).isEqualTo("{\"nome\":\"Pessoa fisica 11\",\"documento\":\"12345678902\",\"tipoPessoa\":\"PF\",\"carros\":[{\"modelo\":\"Modelo 2\",\"placa\":\"AAA1112\"}]}");
+	}
+	
+	@Test
+	public void testeDeAtualizacaoDePessoaJuridicaComNomeECarroAMenos() throws Exception {
+		String jsonResposta = this.mockMvc
+				.perform(post("/pessoa/juridica/atualizar?documento=12345678901235").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"nome\":\"Pessoa juridica 11\",\"carros\":[{\"modelo\":\"Modelo 5\",\"placa\":\"AAA1115\"}]}"))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+
+		assertThat(jsonResposta).isEqualTo("{\"nome\":\"Pessoa juridica 11\",\"documento\":\"12345678901235\",\"tipoPessoa\":\"PJ\",\"carros\":[{\"modelo\":\"Modelo 5\",\"placa\":\"AAA1115\"}]}");
+	}
+	
+	@Test
+	public void testeDeAtualizacaoDePessoaFisicaComCarroAMenos() throws Exception {
+		String jsonResposta = this.mockMvc
+				.perform(post("/pessoa/fisica/atualizar?documento=12345678902").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"carros\":[{\"modelo\":\"Modelo 2\",\"placa\":\"AAA1112\"}]}"))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+
+		assertThat(jsonResposta).isEqualTo("{\"nome\":\"Pessoa fisica 2\",\"documento\":\"12345678902\",\"tipoPessoa\":\"PF\",\"carros\":[{\"modelo\":\"Modelo 2\",\"placa\":\"AAA1112\"}]}");
+	}
+	
+	@Test
+	public void testeDeAtualizacaoDePessoaJuridicaComCarroAMenos() throws Exception {
+		String jsonResposta = this.mockMvc
+				.perform(post("/pessoa/juridica/atualizar?documento=12345678901235").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"carros\":[{\"modelo\":\"Modelo 5\",\"placa\":\"AAA1115\"}]}"))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+
+		assertThat(jsonResposta).isEqualTo("{\"nome\":\"Pessoa juridica 2\",\"documento\":\"12345678901235\",\"tipoPessoa\":\"PJ\",\"carros\":[{\"modelo\":\"Modelo 5\",\"placa\":\"AAA1115\"}]}");
+	}
 
 }
