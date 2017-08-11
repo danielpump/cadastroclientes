@@ -21,11 +21,18 @@ public interface CarroRepositorio extends CrudRepository<Carro, Long> {
 	/**
 	 * Busca um carro pela placa
 	 * 
-	 * @param placa
-	 * @return
+	 * @param placa Placa para a consulta
+	 * @return Veiculo com a placa ou null caso não seja encontrado
 	 */
 	Carro findByPlaca(String placa);
 	
+	/**
+	 * Calcula a quantidade de placas em determinado status para o determinado tipo de pessoa
+	 * 
+	 * @param status Status a ser consultado
+	 * @param tipoPessoa Tipo de pessoa a ser consultado
+	 * @return Quantidade no status por pessoa
+	 */
 	@Query("SELECT COUNT(*) FROM Carro carro inner join carro.pessoa pessoa where carro.status=?1 and pessoa.tipoPessoa = ?2")
 	Long countByStatusAndTipoPessoa(String status, String tipoPessoa);
 

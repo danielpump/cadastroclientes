@@ -139,11 +139,12 @@ public class PessoaControle {
 	 * 
 	 * {<br>		
 	 * 		"status":"Status do veículo",<br>
-	 * 		"quantidade":"Quantidade de placas no status"<br>
+	 * 		"pf":"Quantidade de carros de pessoa fisica com o status"<br>
+	 * 		"pj":"Quantidade de carros de pessoa juridica com o status"<br>
 	 * }
 	 * 
 	 * @param status Status de placa a ser consultada
-	 * @return Retorna o JSON com os dados de quantidade de placas cdastradas
+	 * @return Retorna o JSON com os dados de quantidade de placas cadastradas
 	 * @exception NegocioException Retorna um HTTP 400 em caso de falha na validação dos dados
 	 */
 	@RequestMapping(path = "/carros/consultar", params = "status", method = RequestMethod.GET)
