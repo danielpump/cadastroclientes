@@ -9,6 +9,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.HashMap;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -111,7 +113,7 @@ public class PessoaTest extends ApplicationTest {
 		assertThat(pessoa.getCarros().get(0).getPlaca()).isEqualTo("AAA1111");
 		assertThat(pessoa.getCarros().get(0).getStatus()).isEqualTo("NE");	
 
-		String message = this.mockMvc.perform(get("/pessoa/consultar?documento=12345678901")).andExpect(status().isBadRequest())
+		String message = this.mockMvc.perform(get("/pessoa/buscar?documento=12345678901")).andExpect(status().isBadRequest())
 				.andReturn().getResolvedException().getMessage();
 		assertThat(message).isEqualTo("Registro de pessoa sem cadastro no banco de dados");		
 	}
@@ -130,7 +132,7 @@ public class PessoaTest extends ApplicationTest {
 		assertThat(pessoa.getCarros().get(0).getPlaca()).isEqualTo("AAA1114");
 		assertThat(pessoa.getCarros().get(0).getStatus()).isEqualTo("NE");
 
-		String message = this.mockMvc.perform(get("/pessoa/consultar?documento=12345678901234")).andExpect(status().isBadRequest())
+		String message = this.mockMvc.perform(get("/pessoa/buscar?documento=12345678901234")).andExpect(status().isBadRequest())
 				.andReturn().getResolvedException().getMessage();
 		
 		assertThat(message).isEqualTo("Registro de pessoa sem cadastro no banco de dados");
@@ -752,8 +754,7 @@ public class PessoaTest extends ApplicationTest {
 		String jsonResposta = this.mockMvc
 				.perform(post("/pessoa/juridica/atualizar?documento=12345678901235").contentType(MediaType.APPLICATION_JSON_UTF8)
 						.content("{\"carros\":[{\"modelo\":\"Modelo 5\",\"placa\":\"AAA1115\"},{\"modelo\":\"Modelo 6\",\"placa\":\"AAA1116\"},{\"modelo\":\"Modelo 12\",\"placa\":\"AAA1122\"}]}"))
-				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-		
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();		
 		
 		Pessoa pessoa = new ObjectMapper().readValue(jsonResposta, PessoaJuridica.class);
 		
@@ -770,5 +771,96 @@ public class PessoaTest extends ApplicationTest {
 		assertThat(pessoa.getCarros().get(2).getPlaca()).isEqualTo("AAA1122");
 		assertThat(pessoa.getCarros().get(2).getStatus()).isEqualTo("OK");
 	}
+	
+	@Test
+	public void testeDeValidacaoDeCarroDePessoaFisica() throws Exception {
+		
+		mockServer.expect(requestTo("http://localhost:8081/placa/consultar?numero=AAA1112"))
+		.andExpect(method(HttpMethod.GET))
+		.andRespond(withSuccess("{\"numero\":\"AAA1112\",\"status\":\"OK\"}", MediaType.APPLICATION_JSON_UTF8));
+		
+		mockServer.expect(requestTo("http://localhost:8081/placa/consultar?numero=AAA1113"))
+		.andExpect(method(HttpMethod.GET))
+		.andRespond(withSuccess("{\"numero\":\"AAA1113\",\"status\":\"OK\"}", MediaType.APPLICATION_JSON_UTF8));
+		
+		String jsonResposta = this.mockMvc
+				.perform(get("/pessoa/carros/validar?documento=12345678902"))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+		
+		Pessoa pessoa = new ObjectMapper().readValue(jsonResposta, PessoaFisica.class);
+		
+		assertThat(pessoa.getNome()).isEqualTo("Pessoa fisica 2");
+		assertThat(pessoa.getDocumento()).isEqualTo("12345678902");
+		assertThat(pessoa.getTipoPessoa()).isEqualTo("PF");
+		assertThat(pessoa.getCarros().get(0).getModelo()).isEqualTo("Modelo 2");
+		assertThat(pessoa.getCarros().get(0).getPlaca()).isEqualTo("AAA1112");
+		assertThat(pessoa.getCarros().get(0).getStatus()).isEqualTo("OK");
+		assertThat(pessoa.getCarros().get(1).getModelo()).isEqualTo("Modelo 3");
+		assertThat(pessoa.getCarros().get(1).getPlaca()).isEqualTo("AAA1113");
+		assertThat(pessoa.getCarros().get(1).getStatus()).isEqualTo("OK");
+
+	}
+	
+	@Test
+	public void testeDeValidacaoDeCarroDePessoaJuridica() throws Exception {
+		
+		mockServer.expect(requestTo("http://localhost:8081/placa/consultar?numero=AAA1115"))
+		.andExpect(method(HttpMethod.GET))
+		.andRespond(withSuccess("{\"numero\":\"AAA1115\",\"status\":\"OK\"}", MediaType.APPLICATION_JSON_UTF8));
+		
+		mockServer.expect(requestTo("http://localhost:8081/placa/consultar?numero=AAA1116"))
+		.andExpect(method(HttpMethod.GET))
+		.andRespond(withSuccess("{\"numero\":\"AAA1116\",\"status\":\"OK\"}", MediaType.APPLICATION_JSON_UTF8));
+		
+		String jsonResposta = this.mockMvc
+				.perform(get("/pessoa/carros/validar?documento=12345678901235"))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();		
+		
+		Pessoa pessoa = new ObjectMapper().readValue(jsonResposta, PessoaJuridica.class);
+		
+		assertThat(pessoa.getNome()).isEqualTo("Pessoa juridica 2");
+		assertThat(pessoa.getDocumento()).isEqualTo("12345678901235");
+		assertThat(pessoa.getTipoPessoa()).isEqualTo("PJ");
+		assertThat(pessoa.getCarros().get(0).getModelo()).isEqualTo("Modelo 5");
+		assertThat(pessoa.getCarros().get(0).getPlaca()).isEqualTo("AAA1115");
+		assertThat(pessoa.getCarros().get(0).getStatus()).isEqualTo("OK");
+		assertThat(pessoa.getCarros().get(1).getModelo()).isEqualTo("Modelo 6");
+		assertThat(pessoa.getCarros().get(1).getPlaca()).isEqualTo("AAA1116");
+		assertThat(pessoa.getCarros().get(1).getStatus()).isEqualTo("OK");
+
+	}
+	
+	@Test
+	public void testeDeValidacaoDeCarroDePessoaFisicaInexistente() throws Exception {
+		String message = this.mockMvc.perform(get("/pessoa/carros/validar?documento=12345678903")).andExpect(status().isBadRequest())
+				.andReturn().getResolvedException().getMessage();
+		assertThat(message).isEqualTo("Registro de pessoa sem cadastro no banco de dados");
+	}
+	
+	@Test
+	public void testeDeValidacaoDeCarroDePessoaJuridicaInexistente() throws Exception {
+		String message = this.mockMvc.perform(get("/pessoa/carros/validar?documento=12345678901288")).andExpect(status().isBadRequest())
+				.andReturn().getResolvedException().getMessage();
+		assertThat(message).isEqualTo("Registro de pessoa sem cadastro no banco de dados");
+	}
+	
+	@Test
+	public void testeDeConsultaDeQuantidadeDeRegistrosPorStatus() throws Exception {
+		String message = this.mockMvc.perform(get("/carros/consultar?status=NE")).andExpect(status().isBadRequest())
+				.andReturn().getResolvedException().getMessage();
+		HashMap mapaRetorno = new ObjectMapper().readValue(message, HashMap.class);
+		assertThat(mapaRetorno.get("status")).isEqualTo("NE");
+		assertThat(mapaRetorno.get("pf")).isEqualTo(Long.valueOf(3));
+		assertThat(mapaRetorno.get("pj")).isEqualTo(Long.valueOf(3));		
+	}
+	
+	@Test
+	public void testeDeConsultaDeQuantidadeDeRegistrosPorStatusInvalido() throws Exception {
+		String message = this.mockMvc.perform(get("/carros/consultar?status=NA"))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+		assertThat(message).isEqualTo("Status para consulta incorreto");
+		
+	}
+
 
 }
