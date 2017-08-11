@@ -30,8 +30,9 @@ public class PessoaServico {
 	/**
 	 * Realiza o cadastro/atualização de uma pessoa caso todos os seus dados estejam válidos 
 	 * 
-	 * @param pessoa
-	 * @return
+	 * @param pessoa dados da pessoa
+	 * @return Dados da pessoa cadastrada
+	 * @exception NegocioException Erro de negócio ocorrido no serviço
 	 */
 	public Pessoa gravar(Pessoa pessoa) {
 
@@ -44,8 +45,9 @@ public class PessoaServico {
 	/**
 	 * Busca uma pessoa pelo código do documento
 	 * 
-	 * @param documento
-	 * @return
+	 * @param documento Documento para consulta
+	 * @return Dados da pessoa consultada
+	 * @exception NegocioException Erro de negócio ocorrido no serviço
 	 */
 	public Pessoa buscarPorDocumento(String documento) {
 		Pessoa pessoa = pessoaRepository.findByDocumento(documento);
@@ -58,8 +60,9 @@ public class PessoaServico {
 	/**
 	 * Exclui uma pessoa pelo código do documento
 	 * 
-	 * @param documento
-	 * @return
+	 * @param documento Documento para excluir
+	 * @return Dados da pessoa excluida
+	 * @exception NegocioException Erro de negócio ocorrido no serviço
 	 */
 	public Pessoa excluirPorDocumento(String documento) {
 		Pessoa pessoa = buscarPorDocumento(documento);
@@ -69,10 +72,12 @@ public class PessoaServico {
 
 	/**
 	 * Atualiza uma pessoa pelo código do documento
+	 *
 	 * 
-	 * @param documento
-	 * @param novosDados
-	 * @return
+	 * @param documento Documento para atualizar
+	 * @param novosDados Novos dados para serem atualizados
+	 * @return Dados da pessoa consultada
+	 * @exception NegocioException Erro de negócio ocorrido no serviço
 	 */
 	public Pessoa atualizarPorDocumento(String documento, Pessoa novosDados) {
 		Pessoa pessoa = buscarPorDocumento(documento);

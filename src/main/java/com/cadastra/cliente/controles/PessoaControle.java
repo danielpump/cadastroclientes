@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cadastra.cliente.excecoes.NegocioException;
 import com.cadastra.cliente.modelo.Pessoa;
 import com.cadastra.cliente.modelo.PessoaFisica;
 import com.cadastra.cliente.modelo.PessoaJuridica;
@@ -29,12 +30,13 @@ public class PessoaControle {
 	private PessoaServico pessoaService;
 
 	/**
-	 * URL: {@code http://localhost:8080/pessoa/fisica/cadastrar}
+	 * URL: {@code http://localhost:8080/pessoa/fisica/cadastrar}<br>
 	 * 
 	 * Serviço de cadastro de pessoa fisica
 	 * 
-	 * @param pessoa
-	 * @return
+	 * @param pessoa Dados da pessoa
+	 * @return Dados da pessoa cadastrada
+	 * @exception NegocioException Erro de negócio ocorrido no serviço
 	 */
 	@RequestMapping(path="/pessoa/fisica/cadastrar", method=RequestMethod.POST)
 	public Pessoa cadastrar(@RequestBody PessoaFisica pessoa) {		
@@ -42,12 +44,13 @@ public class PessoaControle {
 	}
 	
 	/**
-	 * URL: {@code http://localhost:8080/pessoa/juridica/cadastrar}
+	 * URL: {@code http://localhost:8080/pessoa/juridica/cadastrar}<br>
 	 * 
 	 * Serviço de cadastro de pessoa juridica
-	 * 
-	 * @param pessoa
-	 * @return
+	 *
+	 * @param pessoa Dados da pessoa
+	 * @return Dados da pessoa cadastrada
+	 * @exception NegocioException Erro de negócio ocorrido no serviço
 	 */
 	@RequestMapping(path="/pessoa/juridica/cadastrar", method=RequestMethod.POST)
 	public Pessoa cadastrar(@RequestBody PessoaJuridica pessoa) {
@@ -55,13 +58,14 @@ public class PessoaControle {
 	}
 	
 	/**
-	 * URL: {@code http://localhost:8080/pessoa/fisica/atualizar?documento=documento}
+	 * URL: {@code http://localhost:8080/pessoa/fisica/atualizar?documento=documento}<br>
 	 * 
 	 * Serviço de atualização de pessoa fisica
 	 * 
-	 * @param documento
-	 * @param pessoa
-	 * @return
+	 * @param documento Código do documento
+	 * @param pessoa Dados da pessoa
+	 * @return Dados da pessoa atualizada
+	 * @exception NegocioException Erro de negócio ocorrido no serviço
 	 */
 	@RequestMapping(path="/pessoa/fisica/atualizar", method=RequestMethod.POST)
 	public Pessoa atualizar(@RequestParam String documento, @RequestBody PessoaFisica pessoa) {
@@ -69,13 +73,14 @@ public class PessoaControle {
 	}
 	
 	/**
-	 * URL: {@code http://localhost:8080/pessoa/juridica/atualizar?documento=documento}
+	 * URL: {@code http://localhost:8080/pessoa/juridica/atualizar?documento=documento}<br>
 	 * 
 	 * Serviço de atualização de pessoa juridica
 	 * 
-	 * @param documento
-	 * @param pessoa
-	 * @return
+	 * @param documento Código do documento
+	 * @param pessoa Dados da pessoa
+	 * @return Dados da pessoa atualizada
+	 * @exception NegocioException Erro de negócio ocorrido no serviço
 	 */
 	@RequestMapping(path="/pessoa/juridica/atualizar", method=RequestMethod.POST)
 	public Pessoa atualizar(@RequestParam String documento, @RequestBody PessoaJuridica pessoa) {
@@ -83,12 +88,13 @@ public class PessoaControle {
 	}
 	
 	/**
-	 * URL: {@code http://localhost:8080/pessoa/buscar?documento=documento}
+	 * URL: {@code http://localhost:8080/pessoa/buscar?documento=documento}<br>
 	 * 
 	 * Consulta uma pessoa pelo código do documento
 	 * 
-	 * @param documento
-	 * @return
+	 * @param documento Código do documento
+	 * @return Dados da pessoa consultada
+	 * @exception NegocioException Erro de negócio ocorrido no serviço
 	 */
 	@RequestMapping(path="/pessoa/buscar", params="documento", method=RequestMethod.GET)
 	public Pessoa listar(@RequestParam String documento){
@@ -96,12 +102,13 @@ public class PessoaControle {
 	}
 	
 	/**
-	 * URL: {@code http://localhost:8080/pessoa/excluir?documento=documento}
+	 * URL: {@code http://localhost:8080/pessoa/excluir?documento=documento}<br>
 	 * 
 	 * Exclui uma pessoa pelo código do documento
 	 * 
-	 * @param documento
-	 * @return
+	 * @param documento Código do documento
+	 * @return Dados da pessoa excluida
+	 * @exception NegocioException Erro de negócio ocorrido no serviço
 	 */
 	@RequestMapping(path="/pessoa/excluir", params="documento" , method=RequestMethod.DELETE)
 	public Pessoa excluir(@RequestParam String documento){

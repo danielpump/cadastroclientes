@@ -1,0 +1,10 @@
+com.cadastra.cliente
+com.cadastra.cliente.banco
+com.cadastra.cliente.controles
+com.cadastra.cliente.excecoes
+com.cadastra.cliente.modelo
+com.cadastra.cliente.repostorios
+com.cadastra.cliente.servicos
+com.cadastra.cliente.servicos.validadores
+com.cadastra.cliente.servicos.validadores.carro
+com.cadastra.cliente.servicos.validadores.pessoa
