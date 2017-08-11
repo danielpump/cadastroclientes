@@ -3,6 +3,9 @@
  */
 package com.cadastra.cliente.controles;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -113,6 +116,44 @@ public class PessoaControle {
 	@RequestMapping(path="/pessoa/excluir", params="documento" , method=RequestMethod.DELETE)
 	public Pessoa excluir(@RequestParam String documento){
 		return pessoaService.excluirPorDocumento(documento);
+	}
+	
+	/**
+	 * URL: {@code http://localhost:8080/pessoa/carros/validar?documento=documento}<br>
+	 * 
+	 * Consulta uma pessoa pelo código do documento
+	 * 
+	 * @param documento Código do documento
+	 * @return Dados da pessoa consultada
+	 * @exception NegocioException Erro de negócio ocorrido no serviço
+	 */
+	@RequestMapping(path="/pessoa/carros/validar", params="documento", method=RequestMethod.GET)
+	public Pessoa validarCarros(@RequestParam String documento){
+		return pessoaService.atualizarDadosNoServicoPorDocumento(documento);
+	}
+	
+	/**
+	 * URL: {@code http://localhost:8081/carros/consultar?status=OK}<br>
+	 * Realiza a consulta de um status no sistema utilizando uma requisição GET tendo o parametro {@code status} como status a ser contabilizado na URL<br>
+	 * Formato do JSON de resposta<br>
+	 * 
+	 * {<br>		
+	 * 		"status":"Status do veículo",<br>
+	 * 		"quantidade":"Quantidade de placas no status"<br>
+	 * }
+	 * 
+	 * @param status Status de placa a ser consultada
+	 * @return Retorna o JSON com os dados de quantidade de placas cdastradas
+	 * @exception NegocioException Retorna um HTTP 400 em caso de falha na validação dos dados
+	 */
+	@RequestMapping(path = "/carros/consultar", params = "status", method = RequestMethod.GET)
+	public Map<String, Object> buscarPorStatus(@RequestParam String status) {
+		Long[] quantidades = pessoaService.consultarQuantidadeCarrosPorStatus(status);
+		HashMap<String, Object> mapa = new HashMap<>();
+		mapa.put("status", status);
+		mapa.put("pf", quantidades[0]);
+		mapa.put("pj", quantidades[1]);
+		return mapa;
 	}
 
 	

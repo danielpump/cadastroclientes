@@ -3,6 +3,7 @@
  */
 package com.cadastra.cliente.repostorios;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -24,5 +25,8 @@ public interface CarroRepositorio extends CrudRepository<Carro, Long> {
 	 * @return
 	 */
 	Carro findByPlaca(String placa);
+	
+	@Query("SELECT COUNT(*) FROM Carro carro inner join carro.pessoa pessoa where carro.status=?1 and pessoa.tipoPessoa = ?2")
+	Long countByStatusAndTipoPessoa(String status, String tipoPessoa);
 
 }

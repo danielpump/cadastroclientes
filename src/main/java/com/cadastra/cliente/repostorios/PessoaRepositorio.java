@@ -23,5 +23,7 @@ public interface PessoaRepositorio extends CrudRepository<Pessoa, Long> {
 	 * @return
 	 */
 	Pessoa findByDocumento(String documento);
+	
+	
 
 }

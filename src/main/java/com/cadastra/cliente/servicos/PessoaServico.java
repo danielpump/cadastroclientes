@@ -3,11 +3,17 @@
  */
 package com.cadastra.cliente.servicos;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cadastra.cliente.excecoes.NegocioException;
+import com.cadastra.cliente.modelo.Carro;
 import com.cadastra.cliente.modelo.Pessoa;
+import com.cadastra.cliente.repostorios.CarroRepositorio;
 import com.cadastra.cliente.repostorios.PessoaRepositorio;
 import com.cadastra.cliente.servicos.validadores.PessoaValidador;
 
@@ -22,10 +28,15 @@ import com.cadastra.cliente.servicos.validadores.PessoaValidador;
 public class PessoaServico {
 
 	@Autowired
-	private PessoaRepositorio pessoaRepository;
+	private PessoaRepositorio pessoaRepositorio;
+	
+	@Autowired
+	private CarroRepositorio carroRepositorio;
 
 	@Autowired
 	private PessoaValidador pessoaValidador;
+	
+	private List<String> statusValidos = Arrays.asList(Carro.STATUS_OK,Carro.STATUS_NE,Carro.STATUS_ROUBADO,Carro.STATUS_APREENDIDO);
 
 	/**
 	 * Realiza o cadastro/atualização de uma pessoa caso todos os seus dados estejam válidos 
@@ -38,7 +49,7 @@ public class PessoaServico {
 
 		pessoaValidador.validar(pessoa);
 
-		return pessoaRepository.save(pessoa);
+		return pessoaRepositorio.save(pessoa);
 
 	}
 
@@ -50,7 +61,7 @@ public class PessoaServico {
 	 * @exception NegocioException Erro de negócio ocorrido no serviço
 	 */
 	public Pessoa buscarPorDocumento(String documento) {
-		Pessoa pessoa = pessoaRepository.findByDocumento(documento);
+		Pessoa pessoa = pessoaRepositorio.findByDocumento(documento);
 		if (pessoa == null) {
 			throw new NegocioException("Registro de pessoa sem cadastro no banco de dados");
 		}
@@ -66,7 +77,7 @@ public class PessoaServico {
 	 */
 	public Pessoa excluirPorDocumento(String documento) {
 		Pessoa pessoa = buscarPorDocumento(documento);
-		pessoaRepository.delete(pessoa);
+		pessoaRepositorio.delete(pessoa);
 		return pessoa;
 	}
 
@@ -84,6 +95,42 @@ public class PessoaServico {
 		pessoa.atualizar(novosDados);
 		gravar(pessoa);
 		return pessoa;
+	}
+	
+	/**
+	 * Atualiza uma pessoa pelo código do documento
+	 * 
+	 * @param documento Documento para atualizar
+	 * @return Dados da pessoa atualizada
+	 * @exception NegocioException Erro de negócio ocorrido no serviço
+	 */
+	public Pessoa atualizarDadosNoServicoPorDocumento(String documento) {
+		Pessoa pessoa = buscarPorDocumento(documento);		
+		gravar(pessoa);
+		return pessoa;
+	}
+	
+	/**
+	 * Consulta a quantidade de veiculos em um status
+	 * 
+	 * @param documento Status para consultar
+	 * @return Quantidade de registros do tipo
+	 * @exception NegocioException Erro de negócio ocorrido no serviço
+	 */
+	public Long[] consultarQuantidadeCarrosPorStatus(String status) {
+		status = status.toUpperCase();
+		boolean ehValido = false;
+		for (String statusValido : statusValidos) {
+			if(statusValido.equals(status))
+				ehValido = true;			
+		}
+		if(!ehValido)
+			throw new NegocioException("Status para consulta incorreto");
+		
+		Long quantidadePessoaFisica = carroRepositorio.countByStatusAndTipoPessoa(status, Pessoa.PESSOA_FISICA);
+		Long quantidadePessoaJuridica = carroRepositorio.countByStatusAndTipoPessoa(status, Pessoa.PESSOA_JURIDICA);
+		
+		return new Long[]{quantidadePessoaFisica, quantidadePessoaJuridica};
 	}
 
 }
