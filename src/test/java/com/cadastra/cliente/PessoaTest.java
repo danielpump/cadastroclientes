@@ -31,9 +31,6 @@ public class PessoaTest extends ApplicationTest {
 	@Autowired
 	private MockMvc mockMvc;
 
-	@Rule
-	public ExpectedException exception = ExpectedException.none();
-
 	@Test
 	public void testeDeConsultaDePessoaPorCPF() throws Exception {
 		String jsonResposta = this.mockMvc.perform(get("/pessoa/buscar?documento=12345678901")).andExpect(status().isOk())
@@ -62,6 +59,45 @@ public class PessoaTest extends ApplicationTest {
 	@Test
 	public void testeDeConsultaDePessoaPorCNPJComPessoaInexistente() throws Exception {
 		String message = this.mockMvc.perform(get("/pessoa/buscar?documento=12345679801236")).andExpect(status().isBadRequest())
+				.andReturn().getResolvedException().getMessage();
+		assertThat(message).isEqualTo("Registro de pessoa sem cadastro no banco de dados");
+	}
+	
+	@Test
+	public void testeDeExclusaoDePessoaPorCPF() throws Exception {
+		String jsonResposta = this.mockMvc.perform(delete("/pessoa/excluir?documento=12345678901")).andExpect(status().isOk())
+				.andReturn().getResponse().getContentAsString();
+
+		assertThat(jsonResposta).isEqualTo("{\"nome\":\"Pessoa fisica 1\",\"documento\":\"12345678901\",\"tipoPessoa\":\"PF\",\"carros\":[{\"modelo\":\"Modelo 1\",\"placa\":\"AAA1111\"}]}");
+
+		String message = this.mockMvc.perform(delete("/pessoa/excluir?documento=12345678901")).andExpect(status().isBadRequest())
+				.andReturn().getResolvedException().getMessage();
+		assertThat(message).isEqualTo("Registro de pessoa sem cadastro no banco de dados");		
+	}
+	
+	@Test
+	public void testeDeExclusaoDePessoaPorCNPJ() throws Exception {
+		String jsonResposta = this.mockMvc.perform(delete("/pessoa/excluir?documento=12345678901234")).andExpect(status().isOk())
+				.andReturn().getResponse().getContentAsString();
+
+		assertThat(jsonResposta).isEqualTo("{\"nome\":\"Pessoa juridica 1\",\"documento\":\"12345678901234\",\"tipoPessoa\":\"PJ\",\"carros\":[{\"modelo\":\"Modelo 4\",\"placa\":\"AAA1114\"}]}");
+
+		String message = this.mockMvc.perform(delete("/pessoa/excluir?documento=12345678901234")).andExpect(status().isBadRequest())
+				.andReturn().getResolvedException().getMessage();
+		
+		assertThat(message).isEqualTo("Registro de pessoa sem cadastro no banco de dados");
+	}
+
+	@Test
+	public void testeDeExclusaoDePessoaPorCPFComPessoaInexistente() throws Exception {
+		String message = this.mockMvc.perform(delete("/pessoa/excluir?documento=12345678903")).andExpect(status().isBadRequest())
+				.andReturn().getResolvedException().getMessage();
+		assertThat(message).isEqualTo("Registro de pessoa sem cadastro no banco de dados");
+	}
+	
+	@Test
+	public void testeDeExclusaoDePessoaPorCNPJComPessoaInexistente() throws Exception {
+		String message = this.mockMvc.perform(delete("/pessoa/excluir?documento=12345679801236")).andExpect(status().isBadRequest())
 				.andReturn().getResolvedException().getMessage();
 		assertThat(message).isEqualTo("Registro de pessoa sem cadastro no banco de dados");
 	}
