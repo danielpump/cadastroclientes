@@ -14,6 +14,10 @@ import com.cadastra.cliente.servicos.validadores.Validador;
 import com.rest.client.integration.PlacaCarroIntegracao;
 
 /**
+ * Realiza a validação do status do carro no serviço de cadastro de status.<br>
+ * Caso o serviço não esteja disponivel o sistema indica o veiculo com status {@link  Carro.STATUS_NE}
+ * 
+ * 
  * @author Daniel Ferraz
  * @since 11 de ago de 2017
  *
