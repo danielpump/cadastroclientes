@@ -16,7 +16,7 @@ import org.springframework.context.annotation.ComponentScan;
  *
  */
 @SpringBootApplication
-@ComponentScan
+@ComponentScan(basePackages= {"com.cadastra.cliente","com.rest.client"})
 public class Application {
 
     public static void main(String[] args) {
