@@ -850,8 +850,8 @@ public class PessoaTest extends ApplicationTest {
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		HashMap mapaRetorno = new ObjectMapper().readValue(message, HashMap.class);
 		assertThat(mapaRetorno.get("status")).isEqualTo("NE");
-		assertThat(mapaRetorno.get("pf")).isEqualTo(Long.valueOf(3));
-		assertThat(mapaRetorno.get("pj")).isEqualTo(Long.valueOf(3));		
+		assertThat(mapaRetorno.get("pf")).isEqualTo(3);
+		assertThat(mapaRetorno.get("pj")).isEqualTo(3);		
 	}
 	
 	@Test
