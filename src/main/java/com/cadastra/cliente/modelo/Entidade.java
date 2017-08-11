@@ -12,6 +12,11 @@ package com.cadastra.cliente.modelo;
  */
 public interface Entidade {
 
+	/**
+	 * Atualiza os campos da entidade conforme a necessidade especifica
+	 * 
+	 * @param entidade
+	 */
 	void atualizar(Entidade entidade);
 	
 }

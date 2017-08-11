@@ -7,6 +7,13 @@ import com.cadastra.cliente.excecoes.NegocioException;
 import com.cadastra.cliente.modelo.Carro;
 import com.cadastra.cliente.servicos.validadores.Validador;
 
+/**
+ * Verifica se o campo modelo está em formato válido
+ * 
+ * @author Daniel Ferraz
+ * @since 11 de ago de 2017
+ *
+ */
 @Component
 public class ModeloValidador implements Validador<Carro> {
 

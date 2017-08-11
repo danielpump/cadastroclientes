@@ -76,6 +76,9 @@ public abstract class Pessoa implements Entidade {
 		this.tipoPessoa = this.tipoPessoa.toUpperCase();
 	}	
 
+	/* (non-Javadoc)
+	 * @see com.cadastra.cliente.modelo.Entidade#atualizar(com.cadastra.cliente.modelo.Entidade)
+	 */
 	@Override
 	public void atualizar(Entidade entidade) {
 		Pessoa pessoa = (Pessoa) entidade;
@@ -100,6 +103,13 @@ public abstract class Pessoa implements Entidade {
 
 	}
 
+	/**
+	 * Verifica se o carro já existe na lista de carros vinculdos
+	 * 
+	 * @param carrosCadastrados
+	 * @param carro
+	 * @return
+	 */
 	private Carro carroJaCadastrado(List<Carro> carrosCadastrados, Carro carro) {
 		for (Carro carroCadastrado : carrosCadastrados) {
 			if (carroCadastrado.getPlaca().equalsIgnoreCase(carro.getPlaca())) {

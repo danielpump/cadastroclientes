@@ -8,6 +8,15 @@ import com.cadastra.cliente.modelo.Carro;
 import com.cadastra.cliente.repostorios.CarroRepositorio;
 import com.cadastra.cliente.servicos.validadores.Validador;
 
+/**
+ * Verifica se o carro já está cadastrado na base<br>
+ * Caso seja uma inclusão e já esteja cadastrado retorna um erro<br>
+ * Caso seja uma atualização verifica se o carro está vinculado a outro proprietaário, caso esteja então lança uma exceção.
+ * 
+ * @author Daniel Ferraz
+ * @since 11 de ago de 2017
+ *
+ */
 @Component
 public class CarroJaExisteValidador implements Validador<Carro> {
 

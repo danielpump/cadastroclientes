@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
+ * Exceção de negócio especifica da aplicação
+ * 
  * @author Daniel Ferraz
  * @since 5 de ago de 2017
  *

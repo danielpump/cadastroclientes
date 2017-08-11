@@ -7,6 +7,8 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 /**
+ * Entidade que representa uma pessoa fisica na aplicação
+ * 
  * @author Daniel Ferraz
  * @since 4 de ago de 2017
  *

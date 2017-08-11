@@ -16,6 +16,12 @@ import com.cadastra.cliente.modelo.Pessoa;
  */
 public interface PessoaRepositorio extends CrudRepository<Pessoa, Long> {
 	
+	/**
+	 * Busca uma pessoa pelo documento
+	 * 
+	 * @param documento
+	 * @return
+	 */
 	Pessoa findByDocumento(String documento);
 
 }

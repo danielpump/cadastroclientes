@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 import com.cadastra.cliente.modelo.Carro;
 
 /**
+ * Controla o fluxo de validação de um {@link Carro}}
+ * 
  * @author Daniel Ferraz
  * @since 5 de ago de 2017
  *

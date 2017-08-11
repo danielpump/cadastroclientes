@@ -7,6 +7,13 @@ import com.cadastra.cliente.excecoes.NegocioException;
 import com.cadastra.cliente.modelo.Pessoa;
 import com.cadastra.cliente.servicos.validadores.Validador;
 
+/**
+ * Verifica se o nome da pessoa está válido
+ * 
+ * @author Daniel Ferraz
+ * @since 11 de ago de 2017
+ *
+ */
 @Component
 public class NomeValidador implements Validador<Pessoa> {
 

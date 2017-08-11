@@ -9,6 +9,13 @@ import com.cadastra.cliente.modelo.Pessoa;
 import com.cadastra.cliente.servicos.validadores.CarroValidador;
 import com.cadastra.cliente.servicos.validadores.Validador;
 
+/**
+ * Verifica se os dados dos veiculos da pessoa estão válidos
+ * 
+ * @author Daniel Ferraz
+ * @since 11 de ago de 2017
+ *
+ */
 @Component
 public class VeiculoValidador implements Validador<Pessoa> {
 

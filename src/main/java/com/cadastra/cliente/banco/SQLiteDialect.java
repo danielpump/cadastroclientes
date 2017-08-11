@@ -8,6 +8,13 @@ import org.hibernate.dialect.function.StandardSQLFunction;
 import org.hibernate.dialect.function.VarArgsSQLFunction;
 import org.hibernate.type.StringType;
 
+/**
+ * Dialeto especifico customizado para SQLite
+ * 
+ * @author Daniel Ferraz
+ * @since 11 de ago de 2017
+ *
+ */
 public class SQLiteDialect extends Dialect {
     public SQLiteDialect() {
         registerColumnType(Types.BIT, "integer");

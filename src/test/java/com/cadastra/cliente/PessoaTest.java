@@ -17,8 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 /**
- * Relação de testes de regras que a aplicação aplica para os cenários de
- * Veículo
+ * Relação de testes de regras que a aplicação aplica para os cenários dos serviços de pessoas
  * 
  * @author Daniel Ferraz
  * @since 9 de ago de 2017

@@ -8,6 +8,14 @@ import com.cadastra.cliente.modelo.Pessoa;
 import com.cadastra.cliente.repostorios.PessoaRepositorio;
 import com.cadastra.cliente.servicos.validadores.Validador;
 
+/**
+ * Verifica se o registro da pessoa já existe no banco de dados<br>
+ * Caso seja uma atualização essa validação é ignorada
+ * 
+ * @author Daniel Ferraz
+ * @since 11 de ago de 2017
+ *
+ */
 @Component
 public class PessoaJaExisteValidador implements Validador<Pessoa> {
 

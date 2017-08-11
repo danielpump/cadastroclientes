@@ -9,6 +9,13 @@ import com.cadastra.cliente.modelo.PessoaFisica;
 import com.cadastra.cliente.modelo.PessoaJuridica;
 import com.cadastra.cliente.servicos.validadores.Validador;
 
+/**
+ * Verifica se o campo documento e tipo pessoa estão validos, tanto para pessoa física quanto juridica
+ * 
+ * @author Daniel Ferraz
+ * @since 11 de ago de 2017
+ *
+ */
 @Component
 public class DocumentoValidador implements Validador<Pessoa> {
 

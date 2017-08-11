@@ -17,6 +17,12 @@ import com.cadastra.cliente.modelo.Carro;
  */
 public interface CarroRepositorio extends CrudRepository<Carro, Long> {
 	
+	/**
+	 * Busca um carro pela placa
+	 * 
+	 * @param placa
+	 * @return
+	 */
 	Carro findByPlaca(String placa);
 
 }
