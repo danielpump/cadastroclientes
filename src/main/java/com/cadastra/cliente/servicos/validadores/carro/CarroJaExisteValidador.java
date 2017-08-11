@@ -24,7 +24,7 @@ public class CarroJaExisteValidador implements Validador<Carro> {
 		Carro carregado = carroRepository.findByPlaca(carro.getPlaca());		
 		if (carregado != null) {
 			if(carro.getPessoa() == null) {
-				throw new NegocioException("Veículo já cadastrado");
+				throw new NegocioException("Registro de carro existente na base");
 			} else if (!carro.getPessoa().getId().equals(carregado.getPessoa().getId())) {
 				throw new NegocioException("Veículo cadastrado em nome de outra pessoa");
 			}

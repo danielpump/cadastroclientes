@@ -13,7 +13,7 @@ public class ModeloValidador implements Validador<Carro> {
 	@Override
 	public void estaValido(Carro carro) {
 		if (StringUtils.isEmpty(carro.getModelo())) {
-			throw new NegocioException("Carro nao modelo");
+			throw new NegocioException("Carro sem campo modelo");
 		}
 	}
 

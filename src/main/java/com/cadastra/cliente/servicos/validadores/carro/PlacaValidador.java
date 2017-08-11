@@ -13,10 +13,11 @@ public class PlacaValidador implements Validador<Carro> {
 	@Override
 	public void estaValido(Carro carro) {
 		if (StringUtils.isEmpty(carro.getPlaca())) {
-			throw new NegocioException("Carro nao placa");
+			throw new NegocioException("Carro sem campo placa");
 		}
+		carro.setPlaca(carro.getPlaca().toUpperCase());
 		if (!carro.getPlaca().matches("^[A-Z]{3}\\d{4}$")) {
-			throw new NegocioException("Formato de placa inválida");
+			throw new NegocioException("Placa fora de formato padronizado");
 		}
 	}
 

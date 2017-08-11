@@ -23,7 +23,7 @@ public class PessoaJaExisteValidador implements Validador<Pessoa> {
 	public void estaValido(Pessoa pessoa) {
 		if (pessoa.getId() == null) {
 			if (pessoaRepository.findByDocumento(pessoa.getDocumento()) != null) {
-				throw new NegocioException("Registro já existe");
+				throw new NegocioException("Registro de pessoa existente na base");
 			}
 		}
 	}

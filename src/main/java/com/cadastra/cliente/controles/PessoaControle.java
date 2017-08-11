@@ -26,36 +26,24 @@ public class PessoaControle {
 	@Autowired
 	private PessoaServico pessoaService;
 
-	@RequestMapping(path="/pessoa/fisica/salvar", method=RequestMethod.POST)
-	public String cadastrar(@RequestBody PessoaFisica pessoa) {
-				
-		pessoaService.gravar(pessoa);
-		
-		return "Sucesso";
+	@RequestMapping(path="/pessoa/fisica/cadastrar", method=RequestMethod.POST)
+	public Pessoa cadastrar(@RequestBody PessoaFisica pessoa) {		
+		return pessoaService.gravar(pessoa);
 	}
 	
-	@RequestMapping(path="/pessoa/juridica/salvar", method=RequestMethod.POST)
-	public String cadastrar(@RequestBody PessoaJuridica pessoa) {
-				
-		pessoaService.gravar(pessoa);
-		
-		return "Sucesso";
+	@RequestMapping(path="/pessoa/juridica/cadastrar", method=RequestMethod.POST)
+	public Pessoa cadastrar(@RequestBody PessoaJuridica pessoa) {
+		return pessoaService.gravar(pessoa);
 	}
 	
 	@RequestMapping(path="/pessoa/fisica/atualizar", method=RequestMethod.POST)
-	public String atualizar(@RequestParam String documento, @RequestBody PessoaFisica pessoa) {
-				
-		pessoaService.atualizarPorDocumento(documento, pessoa);
-		
-		return "Sucesso";
+	public Pessoa atualizar(@RequestParam String documento, @RequestBody PessoaFisica pessoa) {
+		return pessoaService.atualizarPorDocumento(documento, pessoa);
 	}
 	
 	@RequestMapping(path="/pessoa/juridica/atualizar", method=RequestMethod.POST)
-	public String atualizar(@RequestParam String documento, @RequestBody PessoaJuridica pessoa) {
-				
-		pessoaService.atualizarPorDocumento(documento, pessoa);
-		
-		return "Sucesso";
+	public Pessoa atualizar(@RequestParam String documento, @RequestBody PessoaJuridica pessoa) {
+		return pessoaService.atualizarPorDocumento(documento, pessoa);
 	}
 	
 	@RequestMapping(path="/pessoa/buscar", params="documento", method=RequestMethod.GET)

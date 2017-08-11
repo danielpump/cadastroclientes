@@ -25,11 +25,11 @@ public class PessoaServico {
 	@Autowired
 	private PessoaValidador pessoaValidador;
 
-	public void gravar(Pessoa pessoa) {
+	public Pessoa gravar(Pessoa pessoa) {
 
 		pessoaValidador.validar(pessoa);
 
-		pessoaRepository.save(pessoa);
+		return pessoaRepository.save(pessoa);
 
 	}
 

@@ -101,5 +101,285 @@ public class PessoaTest extends ApplicationTest {
 				.andReturn().getResolvedException().getMessage();
 		assertThat(message).isEqualTo("Registro de pessoa sem cadastro no banco de dados");
 	}
+	
+	@Test
+	public void testeDeCadastroDePessoaFisica() throws Exception {
+		String jsonResposta = this.mockMvc
+				.perform(post("/pessoa/fisica/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"nome\":\"Pessoa fisica 11\",\"documento\":\"12345678921\",\"tipoPessoa\":\"PF\",\"carros\":[{\"modelo\":\"Modelo 13\",\"placa\":\"AAA1121\"}]}"))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+
+		assertThat(jsonResposta).isEqualTo("{\"nome\":\"Pessoa fisica 11\",\"documento\":\"12345678921\",\"tipoPessoa\":\"PF\",\"carros\":[{\"modelo\":\"Modelo 13\",\"placa\":\"AAA1121\"}]}");
+	}
+	
+	@Test
+	public void testeDeCadastroDePessoaJuridica() throws Exception {
+		String jsonResposta = this.mockMvc
+				.perform(post("/pessoa/juridica/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"nome\":\"Pessoa juridica 11\",\"documento\":\"12345678901244\",\"tipoPessoa\":\"PJ\",\"carros\":[{\"modelo\":\"Modelo 14\",\"placa\":\"AAA1122\"}]}"))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+
+		assertThat(jsonResposta).isEqualTo("{\"nome\":\"Pessoa juridica 11\",\"documento\":\"12345678901244\",\"tipoPessoa\":\"PJ\",\"carros\":[{\"modelo\":\"Modelo 14\",\"placa\":\"AAA1122\"}]}");
+	}
+	
+	@Test
+	public void testeDeCadastroDePessoaFisicaComLetrasMinusculas() throws Exception {
+		String jsonResposta = this.mockMvc
+				.perform(post("/pessoa/fisica/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"nome\":\"Pessoa fisica 11\",\"documento\":\"12345678921\",\"tipoPessoa\":\"pf\",\"carros\":[{\"modelo\":\"Modelo 13\",\"placa\":\"aaa1121\"}]}"))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+
+		assertThat(jsonResposta).isEqualTo("{\"nome\":\"Pessoa fisica 11\",\"documento\":\"12345678921\",\"tipoPessoa\":\"PF\",\"carros\":[{\"modelo\":\"Modelo 13\",\"placa\":\"AAA1121\"}]}");
+	}
+	
+	@Test
+	public void testeDeCadastroDePessoaJuridicaComLetrasMinusculas() throws Exception {
+		String jsonResposta = this.mockMvc
+				.perform(post("/pessoa/juridica/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"nome\":\"Pessoa juridica 11\",\"documento\":\"12345678901244\",\"tipoPessoa\":\"pj\",\"carros\":[{\"modelo\":\"Modelo 14\",\"placa\":\"aaa1122\"}]}"))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+
+		assertThat(jsonResposta).isEqualTo("{\"nome\":\"Pessoa juridica 11\",\"documento\":\"12345678901244\",\"tipoPessoa\":\"PJ\",\"carros\":[{\"modelo\":\"Modelo 14\",\"placa\":\"AAA1122\"}]}");
+	}
+	
+	@Test
+	public void testeDeCadastroDePessoaFisicaComTipoPessoaErrado() throws Exception {
+		String mensagem = this.mockMvc
+				.perform(post("/pessoa/fisica/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"nome\":\"Pessoa fisica 11\",\"documento\":\"12345678921\",\"tipoPessoa\":\"PJ\",\"carros\":[{\"modelo\":\"Modelo 13\",\"placa\":\"AAA1121\"}]}"))
+				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage();
+
+		assertThat(mensagem).isEqualTo("Tipo de pessoa indeterminado");
+	}
+	
+	@Test
+	public void testeDeCadastroDePessoaJuridicaComTipoPessoaErrado() throws Exception {
+		String mensagem = this.mockMvc
+				.perform(post("/pessoa/juridica/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"nome\":\"Pessoa juridica 11\",\"documento\":\"12345678901244\",\"tipoPessoa\":\"PF\",\"carros\":[{\"modelo\":\"Modelo 14\",\"placa\":\"AAA1122\"}]}"))
+				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage();
+
+		assertThat(mensagem).isEqualTo("Tipo de pessoa indeterminado");
+	}
+	
+	@Test
+	public void testeDeCadastroDePessoaFisicaSemCPF() throws Exception {
+		String message = this.mockMvc
+				.perform(post("/pessoa/fisica/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"nome\":\"Pessoa fisica 11\",\"tipoPessoa\":\"PF\",\"carros\":[{\"modelo\":\"Modelo 13\",\"placa\":\"AAA1121\"}]}"))
+				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage();
+
+		assertThat(message).isEqualTo("Documento deve ser preenchido");
+	}
+	
+	@Test
+	public void testeDeCadastroDePessoaJuridicaSemCNPJ() throws Exception {
+		String message = this.mockMvc
+				.perform(post("/pessoa/juridica/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"nome\":\"Pessoa juridica 11\",\"tipoPessoa\":\"PJ\",\"carros\":[{\"modelo\":\"Modelo 14\",\"placa\":\"AAA1122\"}]}"))
+				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage();
+
+		assertThat(message).isEqualTo("Documento deve ser preenchido");
+	}
+	
+	@Test
+	public void testeDeCadastroDePessoaFisicaComCPFInvalidoTamanhoErrado() throws Exception {
+		String message = this.mockMvc
+				.perform(post("/pessoa/fisica/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"nome\":\"Pessoa fisica 11\",\"documento\":\"123456789\",\"tipoPessoa\":\"PF\",\"carros\":[{\"modelo\":\"Modelo 13\",\"placa\":\"AAA1121\"}]}"))
+				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage();
+
+		assertThat(message).isEqualTo("Documento deve conter os 11 caracteres do CPF");
+	}
+	
+	@Test
+	public void testeDeCadastroDePessoaJuridicaComCNPJInvalidoTamanhoErrado() throws Exception {
+		String message = this.mockMvc
+				.perform(post("/pessoa/juridica/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"nome\":\"Pessoa juridica 11\",\"documento\":\"123456789012\",\"tipoPessoa\":\"PJ\",\"carros\":[{\"modelo\":\"Modelo 14\",\"placa\":\"AAA1122\"}]}"))
+				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage();
+
+		assertThat(message).isEqualTo("Documento deve conter os 14 caracteres do CNPJ");
+	}
+	
+	@Test
+	public void testeDeCadastroDePessoaFisicaComCPFInvalidoPossuindoLetras() throws Exception {
+		String message = this.mockMvc
+				.perform(post("/pessoa/fisica/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"nome\":\"Pessoa fisica 11\",\"documento\":\"123.456.789-01\",\"tipoPessoa\":\"PF\",\"carros\":[{\"modelo\":\"Modelo 13\",\"placa\":\"AAA1121\"}]}"))
+				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage();
+
+		assertThat(message).isEqualTo("Documento deve possuir apenas numeros");
+	}
+	
+	@Test
+	public void testeDeCadastroDePessoaJuridicaComCNPJInvalidoPossuindoLetras() throws Exception {
+		String message = this.mockMvc
+				.perform(post("/pessoa/juridica/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"nome\":\"Pessoa juridica 11\",\"documento\":\"12.345.678/9012-34\",\"tipoPessoa\":\"PJ\",\"carros\":[{\"modelo\":\"Modelo 14\",\"placa\":\"AAA1122\"}]}"))
+				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage();
+
+		assertThat(message).isEqualTo("Documento deve possuir apenas numeros");
+	}
+	
+	@Test
+	public void testeDeCadastroDePessoaFisicaSemCampoTipoPessoa() throws Exception {
+		String message = this.mockMvc
+				.perform(post("/pessoa/fisica/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"nome\":\"Pessoa fisica 11\",\"documento\":\"12345678921\",\"carros\":[{\"modelo\":\"Modelo 13\",\"placa\":\"AAA1121\"}]}"))
+				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage();
+
+		assertThat(message).isEqualTo("Tipo de pessoa deve ser preenchido");
+	}
+	
+	@Test
+	public void testeDeCadastroDePessoaJuridicaSemCampoTipoPessoa() throws Exception {
+		String message = this.mockMvc
+				.perform(post("/pessoa/juridica/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"nome\":\"Pessoa juridica 11\",\"documento\":\"12345678901244\",\"carros\":[{\"modelo\":\"Modelo 14\",\"placa\":\"AAA1122\"}]}"))
+				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage();
+
+		assertThat(message).isEqualTo("Tipo de pessoa deve ser preenchido");
+	}
+	
+	@Test
+	public void testeDeCadastroDePessoaFisicaSemCampoNome() throws Exception {
+		String message = this.mockMvc
+				.perform(post("/pessoa/fisica/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{	\"documento\":\"12345678921\",\"tipoPessoa\":\"PF\",\"carros\":[{\"modelo\":\"Modelo 13\",\"placa\":\"AAA1121\"}]}"))
+				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage();
+
+		assertThat(message).isEqualTo("Nome deve ser preenchido");
+	}
+	
+	@Test
+	public void testeDeCadastroDePessoaJuridicaSemCampoNome() throws Exception {
+		String message = this.mockMvc
+				.perform(post("/pessoa/juridica/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"documento\":\"12345678901244\",\"tipoPessoa\":\"PJ\",\"carros\":[{\"modelo\":\"Modelo 14\",\"placa\":\"AAA1122\"}]}"))
+				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage();
+
+		assertThat(message).isEqualTo("Nome deve ser preenchido");
+	}
+	
+	@Test
+	public void testeDeCadastroDePessoaFisicaSemCarroVinculado() throws Exception {
+		String message = this.mockMvc
+				.perform(post("/pessoa/fisica/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"nome\":\"Pessoa fisica 11\",\"documento\":\"12345678921\",\"tipoPessoa\":\"PF\"}"))
+				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage();
+
+		assertThat(message).isEqualTo("Pessoa deve possuir ao menos um carro para cadastro");
+	}
+	
+	@Test
+	public void testeDeCadastroDePessoaJuridicaSemCarroVinculado() throws Exception {
+		String message = this.mockMvc
+				.perform(post("/pessoa/juridica/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"nome\":\"Pessoa juridica 11\",\"documento\":\"12345678901244\",\"tipoPessoa\":\"PJ\"}"))
+				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage();
+
+		assertThat(message).isEqualTo("Pessoa deve possuir ao menos um carro para cadastro");
+	}
+	
+	@Test
+	public void testeDeCadastroDePessoaFisicaComCarroSemModelo() throws Exception {
+		String message = this.mockMvc
+				.perform(post("/pessoa/fisica/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"nome\":\"Pessoa fisica 11\",\"documento\":\"12345678921\",\"tipoPessoa\":\"PF\",\"carros\":[{\"placa\":\"AAA1121\"}]}"))
+				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage();
+
+		assertThat(message).isEqualTo("Carro sem campo modelo");
+	}
+	
+	@Test
+	public void testeDeCadastroDePessoaJuridicaComCarroSemModelo() throws Exception {
+		String message = this.mockMvc
+				.perform(post("/pessoa/juridica/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"nome\":\"Pessoa juridica 11\",\"documento\":\"12345678901244\",\"tipoPessoa\":\"PJ\",\"carros\":[{\"placa\":\"AAA1122\"}]}"))
+				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage();
+
+		assertThat(message).isEqualTo("Carro sem campo modelo");
+	}
+	
+	@Test
+	public void testeDeCadastroDePessoaFisicaComCarroSemPlaca() throws Exception {
+		String message = this.mockMvc
+				.perform(post("/pessoa/fisica/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"nome\":\"Pessoa fisica 11\",\"documento\":\"12345678921\",\"tipoPessoa\":\"PF\",\"carros\":[{\"modelo\":\"Modelo 13\"}]}"))
+				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage();
+
+		assertThat(message).isEqualTo("Carro sem campo placa");
+	}
+	
+	@Test
+	public void testeDeCadastroDePessoaJuridicaComCarroSemPlaca() throws Exception {
+		String message = this.mockMvc
+				.perform(post("/pessoa/juridica/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"nome\":\"Pessoa juridica 11\",\"documento\":\"12345678901244\",\"tipoPessoa\":\"PJ\",\"carros\":[{\"modelo\":\"Modelo 14\"}]}"))
+				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage();
+
+		assertThat(message).isEqualTo("Carro sem campo placa");
+	}
+	
+	@Test
+	public void testeDeCadastroDePessoaFisicaComCarroComPlacaInvalida() throws Exception {
+		String message = this.mockMvc
+				.perform(post("/pessoa/fisica/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"nome\":\"Pessoa fisica 11\",\"documento\":\"12345678921\",\"tipoPessoa\":\"PF\",\"carros\":[{\"modelo\":\"Modelo 13\",\"placa\":\"AAA-1121\"}]}"))
+				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage();
+
+		assertThat(message).isEqualTo("Placa fora de formato padronizado");
+	}
+	
+	@Test
+	public void testeDeCadastroDePessoaJuridicaComCarroComPlacaInvalida() throws Exception {
+		String message = this.mockMvc
+				.perform(post("/pessoa/juridica/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"nome\":\"Pessoa juridica 11\",\"documento\":\"12345678901244\",\"tipoPessoa\":\"PJ\",\"carros\":[{\"modelo\":\"Modelo 14\",\"placa\":\"AAA-1122\"}]}"))
+				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage();
+
+		assertThat(message).isEqualTo("Placa fora de formato padronizado");
+	}
+	
+	@Test
+	public void testeDeCadastroDePessoaFisicaComCPFDuplicado() throws Exception {
+		String message = this.mockMvc
+				.perform(post("/pessoa/fisica/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"nome\":\"Pessoa fisica 11\",\"documento\":\"12345678901\",\"tipoPessoa\":\"PF\",\"carros\":[{\"modelo\":\"Modelo 13\",\"placa\":\"AAA1121\"}]}"))
+				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage();
+
+		assertThat(message).isEqualTo("Registro de pessoa existente na base");
+	}
+	
+	@Test
+	public void testeDeCadastroDePessoaJuridicaComCNPJDuplicado() throws Exception {
+		String message = this.mockMvc
+				.perform(post("/pessoa/juridica/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"nome\":\"Pessoa juridica 11\",\"documento\":\"12345678901234\",\"tipoPessoa\":\"PJ\",\"carros\":[{\"modelo\":\"Modelo 14\",\"placa\":\"AAA1122\"}]}"))
+				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage();
+
+		assertThat(message).isEqualTo("Registro de pessoa existente na base");
+	}
+	
+	@Test
+	public void testeDeCadastroDePessoaFisicaComCarroDuplicado() throws Exception {
+		String message = this.mockMvc
+				.perform(post("/pessoa/fisica/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"nome\":\"Pessoa fisica 11\",\"documento\":\"12345678921\",\"tipoPessoa\":\"PF\",\"carros\":[{\"modelo\":\"Modelo 13\",\"placa\":\"AAA1111\"}]}"))
+				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage();
+
+		assertThat(message).isEqualTo("Registro de carro existente na base");
+	}
+	
+	@Test
+	public void testeDeCadastroDePessoaJuridicaComCarroDuplicado() throws Exception {
+		String message = this.mockMvc
+				.perform(post("/pessoa/juridica/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"nome\":\"Pessoa juridica 11\",\"documento\":\"12345678901244\",\"tipoPessoa\":\"PJ\",\"carros\":[{\"modelo\":\"Modelo 14\",\"placa\":\"AAA1114\"}]}"))
+				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage();
+
+		assertThat(message).isEqualTo("Registro de carro existente na base");
+	}
 
 }

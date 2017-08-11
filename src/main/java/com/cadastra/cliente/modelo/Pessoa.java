@@ -72,30 +72,9 @@ public abstract class Pessoa implements Entidade {
 	@Getter
 	private List<Carro> carros;
 
-	public static Pessoa criaPessoaFisica() {
-		return new PessoaFisica();
-	}
-
-	public static Pessoa criaPessoaJuridica() {
-		return new PessoaJuridica();
-	}
-
-	public Pessoa comNome(String nome) {
-		this.nome = nome;
-		return this;
-	}
-
-	public Pessoa comDocumento(String documento) {
-		this.documento = documento;
-		return this;
-	}
-
-	public Pessoa adicionaCarro(Carro carro) {
-		if (this.carros == null)
-			this.carros = new ArrayList<>();
-		this.carros.add(carro);
-		return this;
-	}
+	public void upperCaseTipoPessoa() {
+		this.tipoPessoa = this.tipoPessoa.toUpperCase();
+	}	
 
 	@Override
 	public void atualizar(Entidade entidade) {
