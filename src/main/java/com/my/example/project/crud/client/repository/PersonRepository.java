@@ -7,6 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.my.example.project.crud.client.model.Car;
+import com.my.example.project.crud.client.model.Person;
 
 /**
  * @author Daniel Ferraz
@@ -14,6 +15,6 @@ import com.my.example.project.crud.client.model.Car;
  *
  */
 @RepositoryRestResource
-public interface CarRepository extends CrudRepository<Car, Long>{
+public interface PersonRepository extends CrudRepository<Person, Long>{
 
 }

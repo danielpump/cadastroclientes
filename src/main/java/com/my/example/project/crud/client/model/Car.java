@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
+ * Represents a car on system model.
+ * 
  * @author Daniel Ferraz
  * @since 3 de set de 2017
  *
