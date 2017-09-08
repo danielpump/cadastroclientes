@@ -17,11 +17,26 @@ import com.my.example.project.crud.client.model.Person;
  *
  */
 @RestController
-@RequestMapping("/persons/{personId}")
+@RequestMapping("/persons")
 public class PersonController {
 	
-	@RequestMapping(method=RequestMethod.PUT)
+	@RequestMapping(method=RequestMethod.PUT, path="/{personId}")
 	public void updatePerson(@PathVariable Long personId, @RequestBody Person person) {
+		
+	}
+	
+	@RequestMapping(method=RequestMethod.POST)
+	public void registerPerson(@RequestBody Person person) {
+		
+	}
+	
+	@RequestMapping(method=RequestMethod.GET, path="/{personId}")
+	public void loadPerson(@PathVariable Long personId) {
+		
+	}
+	
+	@RequestMapping(method=RequestMethod.DELETE, path="/{personId}")
+	public void deletePerson(@PathVariable Long personId) {
 		
 	}
 

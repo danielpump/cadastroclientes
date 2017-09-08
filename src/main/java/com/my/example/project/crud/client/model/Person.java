@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -33,8 +34,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 @DiscriminatorColumn(name="type")
 @JsonTypeInfo(use=JsonTypeInfo.Id.NAME, property="type", include=As.PROPERTY)
 @JsonSubTypes({
-	@JsonSubTypes.Type(name="NP", value=NaturalPerson.class),
-	@JsonSubTypes.Type(name="LP", value=LegalPerson.class)
+	@JsonSubTypes.Type(name="PF", value=NaturalPerson.class),
+	@JsonSubTypes.Type(name="PJ", value=LegalPerson.class)
 })
 public abstract class Person {
 	
@@ -45,6 +46,9 @@ public abstract class Person {
 	private String name;
 	
 	private String document;
+	
+	@Column(updatable=false, insertable=false)
+	private String type;
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private List<Car> cars;
@@ -64,7 +68,9 @@ public abstract class Person {
 	public List<Car> getCars() {
 		return cars;
 	}
-	
-	
 
+	public String getType() {
+		return type;
+	}
+	
 }
